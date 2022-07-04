@@ -18,7 +18,6 @@ public class GridBuilder : MonoBehaviour
     private void Start()
     {
         gridAreaSize = GetGridAreaSize();
-        gridSize = new Vector2Int(2, 2);
         GenerateGrid(gridSize);
     }
 
@@ -29,9 +28,10 @@ public class GridBuilder : MonoBehaviour
             for (int y = 0; y < gridSize.y; y++)
             {
                 GameObject newCell = Instantiate(cell);
-                newCell.transform.parent = transform;
-                newCell.transform.localScale = Vector3.one;
-                newCell.transform.localPosition = new Vector3(x * (gridAreaSize.x / gridSize.x), y * (gridAreaSize.y / gridSize.y), 0);
+                newCell.GetComponent<RectTransform>().SetParent(transform, false);
+                float posX = (gridAreaSize.x / gridSize.x) * x + (gridAreaSize.x / gridSize.x) * 0.5f;
+                float posY = (gridAreaSize.y / gridSize.y) * y + (gridAreaSize.y / gridSize.y) * 0.5f;
+                newCell.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX, posY);
             }
         }
     }
