@@ -47,7 +47,20 @@ public class GridBuilder : MonoBehaviour
                 gridOfLetters[x, y] = newCell.GetComponent<Text>();
             }
         }
-        GridFiller.FillWithRandomLetters(gridOfLetters, gridSize.x, gridSize.y);
+        GridFiller.FillWithRandomLetters(gridOfLetters);
+    }
+
+    public void MixGrid()
+    {
+        print("works");
+        Vector3[,] newPositions = GridFiller.GetNewPositions(gridOfLetters);
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                gridOfLetters[x, y].GetComponent<LetterMovement>().StartMovement(newPositions[x, y]);
+            }
+        }
     }
 
     private Vector2 GetGridAreaSize()
